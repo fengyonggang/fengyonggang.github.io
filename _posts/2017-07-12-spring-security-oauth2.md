@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Spring Security OAuth2
-categories: jekyll
+categories: spring
 ---
 
 This is the user guide for the support for [OAuth 2.0][oauth-2.0]. For OAuth 1.0, everything is different, so [see its user guide][see-its-user-guide].
@@ -11,6 +11,8 @@ This is the user guide for the support for [OAuth 2.0][oauth-2.0]. For OAuth 1.0
 This user guide is divided into two parts, the first for the OAuth 2.0 provider, the second for the OAuth 2.0 client. For both the provider and the client, the best source of sample code is the [integration tests][integration-tests] and [sample apps][sample-apps].
 
 这篇文章分为两个部分：OAuth 2.0 provider 和 OAuth 2.0 client。 对于provider和client，最好的样例代码请参考[integration tests][integration-tests] 和 [sample apps][sample-apps]。
+
+<!--description-->
 
 ### OAuth 2.0 Provider
 
