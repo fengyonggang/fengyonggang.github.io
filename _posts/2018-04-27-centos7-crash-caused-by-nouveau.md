@@ -53,8 +53,9 @@ category: centos
 
 最近有一台centos7测试服务器经常崩溃重启， 进入/var/crash/目录发现有大量的crash dump文件。 于是根据网上的教程， 尝试去分析这些crash文件。
 
-1. 安装内核调试包
-下载地址：http://debuginfo.centos.org/7/x86_64/
+## 安装内核调试包
+
+下载地址：[http://debuginfo.centos.org/7/x86_64/](http://debuginfo.centos.org/7/x86_64/)
 ```
 kernel-debuginfo-`uname -r`.rpm
 kernel-debuginfo-common-`uname -r`.rpm
@@ -66,8 +67,11 @@ rpm -ivh kernel-debuginfo-`uname -r`.rpm
 rpm -ivh kernel-debuginfo-common-`uname -r`
 ```
 
-2. 进入调试
+## 进入调试
+
+```
 crash /usr/lib/debug/lib/modules/`uname -r`/vmlinux /var/crash/127.0.0.1-2018-04-25-01\:39\:27/vmcore
+```
 
 如果没有crash命令， 可通过yum安装： 
 ```
@@ -154,13 +158,12 @@ PID: 0      TASK: ffff88017caa9f60  CPU: 1   COMMAND: "swapper/1"
 #37 [ffff88017cb1bed0] cpu_startup_entry at ffffffff810e7c95
 #38 [ffff88017cb1bf28] start_secondary at ffffffff8104f12a
 ```
-
 发现报错是跟nouveau有关，于是尝试去禁掉nouveau
 
 重新安装Nvidia驱动可参考： 
-https://zhuanlan.zhihu.com/p/31781281
+[https://zhuanlan.zhihu.com/p/31781281](https://zhuanlan.zhihu.com/p/31781281)
 
-3. 禁掉nouveau驱动
+## 禁掉nouveau驱动
 
 在/lib/modprobe.d/dist-blacklist.conf中，将nvidiafb注释掉：
 ```
@@ -173,7 +176,7 @@ blacklist nouveau
 options nouveau modeset=0 
 ```
 
-4. 重建initramfs image: 
+## 重建initramfs image: 
 
 如果/boot 分区大小不够，可以备份到其他目录
 ```
@@ -181,12 +184,14 @@ mv /boot/initramfs-$(uname -r).img /boot/initramfs-$(uname -r).img.bak
 dracut /boot/initramfs-$(uname -r).img $(uname -r) 
 ```
 
-5. 重启系统
+## 重启系统
+
 ```
 reboot
 ``` 
 
-6. 系统重启后，查看nouveau驱动是否已经被禁止掉
+## 系统重启后，查看nouveau驱动是否已经被禁止掉
+
 ```
 [root@gemfield.org ~]# lsmod | grep nouveau 
 [root@gemfield.org ~]#
